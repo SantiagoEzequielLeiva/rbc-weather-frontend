@@ -1,0 +1,3 @@
+<div class="btn-group d-flex mt-2 mb-2" role="group" aria-label="Users">
+	<button *ngFor="let user of users" [routerLink]="['/boards', user.username]" routerLinkActive="router-link-active" type="button" class="btn btn-dark w-100 text-capitalize">{{user.username}}</button>
+</div>
