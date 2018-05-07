@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BoardsComponent } from './boards/boards.component';
 import { UsersComponent } from './users/users.component';
+import { UserBoardsComponent } from './user-boards/user-boards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardsComponent,
     UsersComponent,
+    UserBoardsComponent,
   ],
   imports: [
     AppRoutingModule,
