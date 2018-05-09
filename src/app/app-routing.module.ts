@@ -8,7 +8,7 @@ import { UsersComponent } from './users/users.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
 
 const appRoutes = [
-    { path : '', redirectTo : '/users', pathMatch : 'full' },
+    { path : '', redirectTo : '/boards', pathMatch : 'full' },
     { path : 'index', component : AppComponent },
     { path : 'boards', component : BoardsComponent },
     { path : 'users', component : UsersComponent },

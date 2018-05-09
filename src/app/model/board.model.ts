@@ -2,6 +2,7 @@ export class Board {
     public id: number;
     public city: string;
     public country: string;
+    public placeType: string;
     public woeid: string;
     public temperature: number;
     public degreeUnits: string;

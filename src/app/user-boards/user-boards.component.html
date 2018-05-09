@@ -24,27 +24,29 @@
 	
 	<div class="row">
 		<div class="col-md-8">
-			<div *ngFor="let board of boards" class="col-md-6 mb-3">
-				<div class="card board">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6 text-left">
-								<h4 class="card-title">{{board.city}}</h4>
-								<p class="card-text">{{board.country}}</p>
-							</div>
-							<div class="col-6">
-								<div class="temp-detail text-right">
-									<span class="temp font-weight-bold" *ngIf="board.temperature != null">
-										{{board.temperature}} ° {{board.degreeUnits.charAt(0)}}
-									</span>
-									<p>{{board.description}}</p>
-									<img src="{{board.iconPath}}" alt=""/>
+			<div class="row">
+				<div *ngFor="let board of boards" class="col-md-6 mb-3">
+					<div class="card board">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-6 text-left">
+									<h4 class="card-title">{{board.city}}</h4>
+									<p class="card-text">{{board.country}}</p>
+								</div>
+								<div class="col-6">
+									<div class="temp-detail text-right">
+										<span class="temp font-weight-bold" *ngIf="board.temperature != null">
+											{{board.temperature}} ° {{board.degreeUnits}}
+										</span>
+										<p>{{board.description}}</p>
+										<img src="{{board.iconPath}}" alt=""/>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="card-body text-right">
-						<button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" (click)="confirmRemove(modalConfirmRemove, board)" autocomplete="off">Remove</button>
+						<div class="card-body text-right">
+							<button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" (click)="confirmRemove(modalConfirmRemove, board)" autocomplete="off">Remove</button>
+						</div>
 					</div>
 				</div>
 			</div>
