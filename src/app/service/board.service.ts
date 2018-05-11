@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { Board } from '../model/board.model';
+import { RestResponse } from '../model/restResponse.model';
 
 const url = 'http://localhost:8080/boards';
 
@@ -27,6 +28,15 @@ export class BoardService {
   }
 
   /**
+   * Se guarda la asociacion entre usuario y board
+   * @param username
+   * @param board
+   */
+  public addBoard(username: string, board: Board): Observable<RestResponse> {
+    return this.http.post<RestResponse>(url + '/' + username, board);
+  }
+
+  /**
    * Eliminamos la relacion entre usuario y board
    * @param username
    * @param board
@@ -37,6 +47,14 @@ export class BoardService {
     return this.http.delete(urlDelete, { headers: new HttpHeaders({'Content-Type': 'application/json'}) })
       .toPromise()
       .then(() => null);
+  }
+
+  /**
+   * Buscamos boards en base a nombre de ciudad, localidad o pais
+   * @param term
+   */
+  public boardsByTerm(term: string): Observable<Board[]> {
+    return this.http.get<Board[]>(url + '/location/' + term);
   }
 
 }

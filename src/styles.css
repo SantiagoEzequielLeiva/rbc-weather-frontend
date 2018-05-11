@@ -2,6 +2,10 @@
 
 /* CLASS */
 
+.last-update {
+    font-size: x-small;
+}
+
 .temp-detail > .temp {
     font-size: x-large;
 }

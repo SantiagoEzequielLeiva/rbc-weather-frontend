@@ -5,17 +5,19 @@
 				<div class="card board">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-6 text-left">
+							<div class="col-7 text-left">
 								<h4 class="card-title">{{board.city}}</h4>
 								<p class="card-text">{{board.country}}</p>
+								<br>
+								<span class="last-update"><strong>Last update:</strong> {{ board.lastCheck | date : 'dd/MM/yyyy HH:mm' }}</span>
 							</div>
-							<div class="col-6">
+							<div class="col-5">
 								<div class="temp-detail text-right">
 									<span class="temp font-weight-bold" *ngIf="board.temperature != null">
 										{{board.temperature}} ° {{board.degreeUnits}}
 									</span>
 									<p>{{board.description}}</p>
-									<img src="{{board.iconPath}}" alt=""/>
+									<img src="{{board.iconPath}}" class="img-fluid" alt="{{board.description}}"/>
 								</div>
 							</div>
 						</div>
