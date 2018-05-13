@@ -10,6 +10,8 @@ const url = 'http://localhost:8080/boards';
 @Injectable()
 export class BoardService {
 
+  public degreeUnits: String = 'F';
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -55,6 +57,22 @@ export class BoardService {
    */
   public boardsByTerm(term: string): Observable<Board[]> {
     return this.http.get<Board[]>(url + '/location/' + term);
+  }
+
+  /**
+   * Mostramos la temperatura dependiendo de la unidad de medida
+   * @param temperature
+   * @param generalDegreeUnit
+   */
+  public toggleTempByDegreeUnits(temperature: number): string {
+    if ( this.degreeUnits === 'C' ) {
+      // tslint:disable-next-line:prefer-const
+      let temp = (temperature - 32) * 5 / 9;
+
+      return Math.round(temp) + '° C';
+    } else {
+      return temperature + '° F';
+    }
   }
 
 }

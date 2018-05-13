@@ -1,4 +1,17 @@
 <div class="container">
+	<div class="row justify-content-end">
+		<div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="boardService.degreeUnits">
+			<label ngbButtonLabel class="btn-outline-info btn-sm">
+				<input ngbButton type="radio" value="F"> Fahrenheit
+			</label>
+			<label ngbButtonLabel class="btn-outline-info btn-sm">
+				<input ngbButton type="radio" value="C"> Celcius
+			</label>
+		</div>
+	</div>
+</div>
+
+<div class="container">
 	<div class="row">
 		<div class="row">
 			<div *ngFor="let board of boards" class="col-md-4 mb-3">
@@ -14,7 +27,7 @@
 							<div class="col-5">
 								<div class="temp-detail text-right">
 									<span class="temp font-weight-bold" *ngIf="board.temperature != null">
-										{{board.temperature}} ° {{board.degreeUnits}}
+										{{ this.boardService.toggleTempByDegreeUnits(board.temperature, this.boardService.degreeUnits) }}
 									</span>
 									<p>{{board.description}}</p>
 									<img src="{{board.iconPath}}" class="img-fluid" alt="{{board.description}}"/>

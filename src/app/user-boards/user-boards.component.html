@@ -20,9 +20,54 @@
 		</ol>
 	</nav>
 	
-	<h1 class="display-4 text-capitalize text-center">{{username}}'s boards</h1>
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-capitalize">{{username}}'s boards</h1>
+
+			<div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="boardService.degreeUnits">
+				<label ngbButtonLabel class="btn-outline-info btn-sm">
+					<input ngbButton type="radio" value="F"> Fahrenheit
+				</label>
+				<label ngbButtonLabel class="btn-outline-info btn-sm">
+					<input ngbButton type="radio" value="C"> Celcius
+				</label>
+			</div>
+		</div>
+	</div>
 	
 	<div class="row">
+		<div class="col-md-8">
+			<div class="row">
+				<div *ngFor="let board of boards" class="col-md-6 mb-3">
+					<div class="card board">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-7 text-left">
+									<h4 class="card-title">{{board.city}}</h4>
+									<p class="card-text">{{board.country}}</p>
+									<br>
+									<span class="last-update"><strong>Last update:</strong> {{ board.lastCheck | date : 'dd/MM/yyyy HH:mm' }}</span>
+								</div>
+								<div class="col-5">
+									<div class="temp-detail text-right">
+										<span class="temp font-weight-bold" *ngIf="board.temperature != null">
+											{{ this.boardService.toggleTempByDegreeUnits(board.temperature, this.boardService.degreeUnits) }}
+										</span>
+										<p>{{board.description}}</p>
+										<img src="{{board.iconPath}}" class="img-fluid" alt="{{board.description}}"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-body text-right">
+							<button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" (click)="confirmRemove(modalConfirmRemove, board)" autocomplete="off">Remove</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<p *ngIf="boards.length < 1" class="text-center my-4">No boards to display</p>
+		</div>
 		<div class="col-md-4">
 			<div class="card">
 				<div class="card-body">
@@ -31,7 +76,7 @@
 							<input [(ngModel)]="term" type="text" class="form-control" id="term" name="term" placeholder="Search by town, state, or country." />
 						</div>
 						<div class="form-group">
-							<button type="button" (click)="search(term);" class="btn btn-info btn-block">Search</button>
+							<button type="button" (click)="search(term);" class="btn btn-primary btn-block">Search</button>
 						</div>
 					</form>
 				</div>
@@ -48,38 +93,6 @@
 					</li>
 				</ul>
 			</div>
-		</div>
-		<div class="col-md-8">
-			<div class="row">
-				<div *ngFor="let board of boards" class="col-md-6 mb-3">
-					<div class="card board">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-7 text-left">
-									<h4 class="card-title">{{board.city}}</h4>
-									<p class="card-text">{{board.country}}</p>
-									<br>
-									<span class="last-update"><strong>Last update:</strong> {{ board.lastCheck | date : 'dd/MM/yyyy HH:mm' }}</span>
-								</div>
-								<div class="col-5">
-									<div class="temp-detail text-right">
-										<span class="temp font-weight-bold" *ngIf="board.temperature != null">
-											{{board.temperature}} ° {{board.degreeUnits}}
-										</span>
-										<p>{{board.description}}</p>
-										<img src="{{board.iconPath}}" class="img-fluid" alt="{{board.description}}"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card-body text-right">
-							<button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" (click)="confirmRemove(modalConfirmRemove, board)" autocomplete="off">Remove</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<p *ngIf="boards.length < 1" class="text-center my-4">No boards to display</p>
 		</div>
 	</div>
 </div>
