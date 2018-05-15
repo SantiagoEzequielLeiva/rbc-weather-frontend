@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BoardsComponent } from './boards/boards.component';
 import { UsersComponent } from './users/users.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
+import { WebSocketService } from './service/web-socket.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { UserBoardsComponent } from './user-boards/user-boards.component';
     HttpClientModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [WebSocketService],
   bootstrap: [AppComponent]
 })
 
