@@ -8,12 +8,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../service/board.service';
 import { Board } from '../model/board.model';
 import { OK } from '../model/httpStatus';
+import { WebSocketService } from '../service/web-socket.service';
 
 @Component({
   selector: 'app-user-boards',
   templateUrl: './user-boards.component.html',
   styleUrls: ['./user-boards.component.css'],
-  providers: [BoardService]
+  providers: [BoardService, WebSocketService]
 })
 export class UserBoardsComponent implements OnInit {
 
@@ -27,7 +28,8 @@ export class UserBoardsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private boardService: BoardService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private webSocketService: WebSocketService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -40,7 +42,7 @@ export class UserBoardsComponent implements OnInit {
    * Se obtienen los boards a traves del nombre de usuario que viene por parametro
    * @param username
    */
-  public loadUserBoards(username: string): void {
+  private loadUserBoards(username: string): void {
     this.boardService.loadUserBoards(this.username).subscribe(boardsResponse => {
       this.boards = boardsResponse;
     });
@@ -55,7 +57,9 @@ export class UserBoardsComponent implements OnInit {
     this.boardToRemove = board;
     this.modalService.open(modalConfirmRemove, { centered : true }).result.then((result) => {
       this.boardService.removeBoard(this.username, this.boardToRemove.id)
-        .then(() => { this.boards = this.boards.filter(removedBoard => removedBoard.id !== this.boardToRemove.id); });
+        .then(() => {
+          this.boards = this.boards.filter(removedBoard => removedBoard.id !== this.boardToRemove.id);
+        });
     }, (reason) => {} );
   }
 
@@ -71,6 +75,12 @@ export class UserBoardsComponent implements OnInit {
     this.boardService.addBoard(this.username, boardSearch).subscribe(restResponse => {
       if (restResponse.responseCode === OK) {
         this.loadUserBoards(this.username);
+
+        // tslint:disable-next-line:prefer-const
+        let stompClient = this.webSocketService.connect();
+        stompClient.connect({}, frame => {
+          stompClient.send('/app/board/new', {});
+        });
       }
     });
   }
